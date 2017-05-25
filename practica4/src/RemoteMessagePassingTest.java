@@ -26,15 +26,16 @@ public class RemoteMessagePassingTest {
 	    RemoteMessagePassing<Message> rmp;
 	    Message enviado, recibido;
 	    while(true){
-		System.out.println("Esperando conexión");
+		System.out.println("\nEsperando conexión en puerto "+ PUERTO);
 		canal = canalServidor.accept();
-		System.out.println("Cliente conectado");
+		System.out.println("Cliente conectado");		
 		rmp = new RemoteMessagePassing<Message>(canal);
 		recibido = (Message) rmp.receive();
-		System.out.println("Mensaje: " + recibido.toString() + " recibido");
-		enviado = new Message(idMensajeS++, "Mensaje servidor " + idMensajeS);
-		rmp.send(enviado);
-		System.out.println("Mensaje: " + enviado.toString() + " enviado al cliente");
+		System.out.println(recibido.toString() + " recibido");
+		//enviado = new Message(idMensajeS++, "Mensaje servidor " + idMensajeS);
+		//rmp.send(enviado);
+		//System.out.println("Mensaje: " + enviado.toString() + " enviado al cliente");
+		rmp.close();
 	    }
 	} catch(IOException ioe){ioe.printStackTrace();}
     }
@@ -44,16 +45,19 @@ public class RemoteMessagePassingTest {
 	    Socket canal;
 	    RemoteMessagePassing <Message> rmp;
 	    Message enviado, recibido;
-	    while (true){
-    		canal = new Socket("localhost", PUERTO);
+	    //while (true){
+		canal = new Socket("localhost", PUERTO);
 		rmp = new RemoteMessagePassing<Message>(canal);
-		enviado = new Message(idMensajeC++, "Mensaje cliente: " + idMensajeC);
+		enviado = new Message(idMensajeC++, "¡Hola, servidor!");
 		rmp.send(enviado);
-		System.out.println("Mensaje " + enviado.toString() + " enviado al servidor");
-		recibido = (Message)rmp.receive();
-		System.out.println("Mensaje " + recibido.toString() + " recibido en el cliente");
-	    }
-	} catch(IOException ioe){ioe.printStackTrace();}
+		System.out.println(enviado.toString() + " enviado al servidor");
+		//recibido = (Message)rmp.receive();
+		//System.out.println("Mensaje " + recibido.toString() + " recibido en el cliente");
+		//rmp.close();
+		//}
+	} catch(IOException ioe){
+	    System.err.println("No existe ningún servidor listo para comunicación en puerto: "+PUERTO);
+	    ioe.printStackTrace();}
     }
 
 }
