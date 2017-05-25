@@ -45,7 +45,7 @@ public class RemoteMessagePassingTest {
 	    Socket canal;
 	    RemoteMessagePassing <Message> rmp;
 	    Message enviado, recibido;
-	    //while (true){
+	    while (true){
 		canal = new Socket("localhost", PUERTO);
 		rmp = new RemoteMessagePassing<Message>(canal);
 		enviado = new Message(idMensajeC++, "¡Hola, servidor!");
@@ -54,7 +54,7 @@ public class RemoteMessagePassingTest {
 		//recibido = (Message)rmp.receive();
 		//System.out.println("Mensaje " + recibido.toString() + " recibido en el cliente");
 		//rmp.close();
-		//}
+	    }
 	} catch(IOException ioe){
 	    System.err.println("No existe ningún servidor listo para comunicación en puerto: "+PUERTO);
 	    ioe.printStackTrace();}

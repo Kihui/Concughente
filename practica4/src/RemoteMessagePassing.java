@@ -44,7 +44,7 @@ public class RemoteMessagePassing<T extends Serializable> {
 	synchronized (monitorRecibo){
 	    try{
 	        recibido = castGenerico(canalIn.readObject());
-		canalIn.close();//maybe quitar??
+		//canalIn.close();//maybe quitar??
 	    } catch (Exception e){
 		System.err.println("Error al recibir mensaje.");
 		e.printStackTrace();
