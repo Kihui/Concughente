@@ -29,8 +29,8 @@ public class RemoteMessagePassing<T extends Serializable> {
 	synchronized (monitorEnvio){
 	    try{		
 	        canalOut.writeObject(obj);
-	        canalOut.flush();//?
-		canalOut.close();//maybe quitar
+	        //canalOut.flush();//?
+		//canalOut.close();//maybe quitar
 	    } catch(IOException ioe){
 		System.err.println("Error al enviar mensaje.");
 		ioe.printStackTrace();

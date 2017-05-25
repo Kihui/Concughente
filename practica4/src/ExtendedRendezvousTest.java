@@ -36,7 +36,7 @@ public class ExtendedRendezvousTest {
 		erv.response(enviado);
 	        erv.close();
 	    }
-	}catch(Exception e){System.err.println("La cagaste");}   
+	}catch(Exception e){System.err.println("Error iniciando servidor");}   
     }
     
     public static void startClient() {
@@ -57,7 +57,7 @@ public class ExtendedRendezvousTest {
 		System.out.println("El servidor respondió "+recibido);
 		//erv.getRequest();
 		erv.close();
-		}
-	}catch(Exception e){System.err.println("La cagaste");}
+	    }
+	}catch(Exception e){System.err.println("No existe ningún servidor listo para comunicación en puerto: "+PUERTO);}
     }
 }
