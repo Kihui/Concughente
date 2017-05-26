@@ -50,6 +50,9 @@ public class QuickSort{
 	quickSort(a,i+1,fin);
     }
 
+    /** Método auxiliar para quickSort
+     *
+     */
     private void intercambia(Integer[] a, int p, int q) { 
         if(p == q)
             return;
@@ -62,20 +65,18 @@ public class QuickSort{
      * 
      */
     private Integer[] randomList(int t) {
-	System.out.println(t);
 	Random r = new Random(9);
 	Integer[] out = new Integer[t];
 	for(int i = 0; i < out.length; i++)
-	    out[i] = r.nextInt();
+	    out[i] = r.nextInt(10000);
 	System.out.println(aCadena(out));
 	return out;
     }
 
-    /** Ejecución del algoritmo paralelizado
-     * @param 
+    /** Inicialización del servidor
+     * 
      */
     public void startServer(){	  
-	//System.out.println("\nArreglo original\n"+arreglo.toString()+"\nIniciando Servidor...");
 	try{
 	    ServerSocket canalServidor = new ServerSocket(PUERTO);
 	    while(true){
@@ -91,13 +92,13 @@ public class QuickSort{
 		erv.response(arreglo);
 	    }
 	} catch(IOException ioe){
-	    System.err.println("Error");
+	    System.err.println("Error iniciando servidor");
 	    ioe.printStackTrace();
 	}
     }
 
-    /** Ejecución del algoritmo paralelizado
-     * @param 
+    /**  Inicialización del cliente
+     *  
      */
     public void startClient(){
         ElPatron ep = new ElPatron(PUERTO, arreglo);
@@ -115,13 +116,16 @@ public class QuickSort{
 
     private String aCadena(Integer[] a){
         String s = "[";
-	for(int i = 0; i < a.length; i++)
+	for(int i = 0; i < a.length-1; i++)
 	    s += a[i]+", ";
-	return s+"]";
+	return s+a[a.length-1]+"]";
     }
 	
     public static void main(String[] args) {
-	//verificacion de args help
+        if(args.length < 1){
+	    System.out.println("Uso del programa:\n\njava QuickSort [OPCION] [elems]\n\nOPCION = client | server\nelems = un número entero");
+	    return;
+	}
 	boolean isServer = "server".equals(args[0]);
 	if(isServer)
 	    new QuickSort(isServer, 0).run();

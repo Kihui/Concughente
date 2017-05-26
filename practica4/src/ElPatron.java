@@ -18,7 +18,10 @@ public class ElPatron{
 	try{
 	    Socket canal = new Socket("localhost", puerto);
 	    erv = new ExtendedRendezvous<>(canal);
-	} catch(IOException ioe){ioe.printStackTrace();}
+	} catch(IOException ioe){
+	    System.err.println("Error iniciando cliente, no hay ningún servidor listo para comunicación en ese puerto: "+puerto);
+	    ioe.printStackTrace();
+	}
 			
     }
 
@@ -26,7 +29,7 @@ public class ElPatron{
 	return arreglado;
     }
     public void run(){
-	System.out.println("Enviando arreglo original. Esperando arreglo ordenado");
+	System.out.println("Enviando arreglo original. Esperando arreglo ordenado...");
         arreglado = erv.requestAndAwaitReply(original);	
 	erv.close();		
     }

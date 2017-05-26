@@ -20,41 +20,35 @@ public class ExtendedRendezvousTest {
     
     public static void startServer() {
 	try{
-	    ServerSocket canalServidor = new ServerSocket(PUERTO);
-	    
-	   
-	    Message enviado, recibido;
+	    ServerSocket canalServidor = new ServerSocket(PUERTO);	   	   
+	    Message mEnvio, mRecibo;
 	    while(true){
 		System.out.println("Esperando conexión");
 		Socket canal = canalServidor.accept();
 		ExtendedRendezvous<Message> erv = new ExtendedRendezvous<>(canal);
 		System.out.println("Cliente conectado, servidor esperando mensaje");
-		recibido = erv.getRequest();
-		System.out.println("El cliente envió: "+recibido);
-	        enviado = new Message(idMensajeS, "Mensaje recibido: "+ idMensajeS++);
+	        mRecibo = erv.getRequest();
+		System.out.println("El cliente envió: "+mRecibo);
+	        mEnvio = new Message(idMensajeS, "Mensaje recibido: "+ idMensajeS++);
 		System.out.println("Enviando respuesta");
-		erv.response(enviado);
+		erv.response(mEnvio);
 	        erv.close();
 	    }
 	}catch(Exception e){System.err.println("Error iniciando servidor");}   
     }
     
     public static void startClient() {
-	try{
-
-	    
-	    
-	    Message enviado, recibido;
-
+	try{	    	    
+	    Message mEnvio, mRecibo;
 	    while(true){
 		
 		Socket canal = new Socket("localhost", PUERTO);
 		ExtendedRendezvous<Message> erv = new ExtendedRendezvous<>(canal);
-		enviado = new Message(idMensajeC, "Osas "+ idMensajeC++);
+	        mEnvio = new Message(idMensajeC, "Osas "+ idMensajeC++);
 		System.out.println("Mensaje enviado a servidor. Cliente esperando respuesta");
-		recibido = erv.requestAndAwaitReply(enviado);
+	        mRecibo = erv.requestAndAwaitReply(mEnvio);
 		
-		System.out.println("El servidor respondió "+recibido);
+		System.out.println("El servidor respondió "+mRecibo);
 		//erv.getRequest();
 		erv.close();
 	    }
