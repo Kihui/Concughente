@@ -1,0 +1,60 @@
+%Especificacion
+\documentclass[12pt]{article}
+
+%Paquetes
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{enumitem}
+%\usepackage{tabularx}
+%\usepackage{wasysym}
+\usepackage{graphicx}
+%\graphicspath { {media/} }
+%\usepackage{pifont}
+
+%Preambulo
+\title{Computación Concurrente \\ Práctica 4: Reporte}
+\author{Andrea González Vargas\\Carlos Gerardo Acosta Hernández}
+\date{Facultad de Ciencias UNAM}
+
+\begin{document}
+\maketitle
+\section{Preguntas}
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{¿Qué tipo de paso de mensajes se realiza en la clase \textit{RemoteMessagePassing}?}\\
+  
+\item \textbf{Si N threads (T1, T2, ..., TN) envían, cada uno, un mensaje diferente a S, en el orden de su numeración (primero T1, luego T2, etc.), ¿En qué orden va a recibir S los mensajes?}\\
+  
+\end{enumerate}
+
+\section{Ejecución}
+\subsection{QuickSort}
+Para la ejecución de la implementación del \textit{QuickSort} con \textit{Rendezvous}, basta
+compilar el código fuente pertinente:
+\begin{verbatim}
+    $ javac QuickSort
+\end{verbatim}
+Posteriormente, y similarmente a los \textit{tests} de las otras dos clases de los ejercicios previos
+a éste, se puede iniciar un servidor haciendo:
+\begin{verbatim}
+    $ java QuickSort server
+\end{verbatim}
+Que estará esperando la conexión con algún cliente que enviará a su vez un arreglo a ordenar por el
+servidor esperando como respuesta uno ya ordenado.
+Para iniciar tal cliente, es necesario llamar al programa con dos argumentos (se espera que ya exista un servidor en ejecución).
+\begin{verbatim}
+    $ java QuickSort client <cantidad_de_numeros_a_ordenar>
+\end{verbatim}
+Cabe mencionar que nuestro cliente sólo hace una petición por ejecución mientras que el servidor se mantiene en ejecución en espera de mensajes para hacer su trabajo de ordenamiento.
+
+\section{RemoteMessagePassing y ExtendedRendesvous}
+Las pruebas respectivas de ambos \textit{tests} se ejecutan\footnote{Aunque en el caso de \textit{RemoteMessagePassing} la comunicación se basa en que el cliente manda por tiempo indefinido mensajes, mientras que en \textit{ExtendedRendezvous} la comunicación es de ambas partes, tanto del cliente como del servidor.} como se especifica en la práctica.
+
+
+\end{document}
