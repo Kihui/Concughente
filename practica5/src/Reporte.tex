@@ -1,0 +1,71 @@
+%Especificacion
+\documentclass[12pt]{article}
+
+%Paquetes
+\usepackage[left=2cm,right=2cm,top=3cm,bottom=3cm,letterpaper]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{hyperref}
+%\usepackage{tabularx}
+%\usepackage{wasysym}
+\usepackage{graphicx}
+%\graphicspath { {media/} }
+%\usepackage{pifont}
+
+%Preambulo
+\title{Computación Concurrente \\ Práctica 4: Reporte}
+\author{Andrea Itzel González Vargas\\ andreagonz@ciencias.unam.mx \\ 1-08000801\\Carlos Gerardo Acosta Hernández\\carlos-acosta@ciencias.unam.mx\\3-11154243}
+\date{Facultad de Ciencias UNAM}
+
+\begin{document}
+\maketitle
+\section{Preguntas}
+\textbf{3}.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{¿Qué modelo de paralelismo se presenta en este problema (funcional, de dominio, actividad)?}\\
+  Primero recordemos lo siguiente:
+  \begin{itemize}
+  \item \textbf{Funcional} El objetivo es dividir el algoritmo en tareas disjuntas, que pueden ser llevadas a cabo de manera simultánea. 
+  \item \textbf{de Dominio} La idea es descomponer los datos involucrados con el problema, para que
+    puedan ser procesados independientemente, idealmente en subconjuntos de tamaño igual o similar.
+  \end{itemize}
+  En el problema de la multiplicación de matrices es posible asignar a cada hilo de ejecución su conjunto de entrada a partir de submatrices para llevar a cabo el cálculo de ciertos elementos de la matriz resultado; dicho proceso de cálculo se lleva a cabo de manera independiente por cada hilo y por tanto podemos considerar el algoritmo dividido en tareas.\\
+  Por tanto, consideraremos el problema como uno \textbf{de actividad}, pues posee las características de las otras dos categorías.
+\item \textbf{Calcula el speedup.}
+  En el apéndice de este documento es posible encontrar la gráfica de \textit{speed-up}, la función utilizada es la provista en la tesis de maestría del profesor:
+  \begin{equation}
+    S_p = \frac{T_1}{T_p}
+  \end{equation}
+\item \textbf{¿Qué patrón o patrones de software paralelo pueden ser usados para este contexto?}\\
+  Al ser un problema de paralelismo de actividad, múltiples enfoques pueden tomarse para resolverlo.\\
+  Es posible utilizar el patrón de software \textbf{CSE} (\textit{Communicating Sequential Elements}) principalmente,
+  donde cada entrada de la matriz producto es calculada asignando un conjunto de filas de la primera matriz y un conjunto de columnas de la segunda matriz a cada \textit{elemento} del patrón.\\
+  Asimismo, también puede utilizarse un patrón de paralelismo de actividad, como \textbf{MW} (\textit{Manager Workers}), donde el \textit{manager} distribuye a los trabajadores los renglones de la primera matriz y cada uno de ellos posee su propia copia de la segunda matriz para realizar cada producto que le corresponde para al final comunicarlo al \textit{manager} y construir el resultado final.\\
+  Otra solución está basa en el patrón de software \textbf{PF} (\textit{Pipes and Filters}), sin embargo, al compartir la característica de requerir tiempos considerables en comunicación tanto \textbf{PF} como \textbf{CSE} frente a la comuniación restrictiva y mucho menor de \textbf{MW}, éste último es preferido sobre aquellos dos.
+\end{enumerate}
+\section{Ejecución}
+Para ejecutar el programa, es necesario compilar el código fuente en primer lugar. Para esto, basta hacer:
+\begin{verbatim}
+    $ javac Main.java
+\end{verbatim}
+Que como su nombre indica contiene el programa principal que utiliza la clase matriz.
+Para realizar un cálculo paralelo de matrices, es necesario:
+\begin{verbatim}
+    $ java Main <n1> <m1=n2> <m2> <h>
+\end{verbatim}
+Donde $n1$ y $m2$ son el número de renglones y el número de columnas de la primera matriz, respectivamnete y $n2$ y $m2$, lo análogo para la segunda. Es importante, notar que el segundo argumento del programa se refiere tanto al número de columnas de la primera matriz como el número de renglones de la segunda, puesto que la multiplicación sólo está definida para matrices que cumplen esta condición, así que
+le ahorramos al usuario el tener que escribir esos dos valores por separado. Finalmente, $h$ refiere al número de hilos a utilizar en la ejecución.
+
+\section{Apéndice}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{gnuplot/plot}
+\end{figure}
+\end{document}

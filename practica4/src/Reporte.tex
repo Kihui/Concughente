@@ -21,7 +21,7 @@
 
 %Preambulo
 \title{Computación Concurrente \\ Práctica 4: Reporte}
-\author{Andrea Itzel González Vargas\\Carlos Gerardo Acosta Hernández}
+\author{Andrea Itzel González Vargas\\ andreagonz@ciencias.unam.mx \\ 108000801\\Carlos Gerardo Acosta Hernández\\carlos-acosta@ciencias.unam.mx\\3-11154243}
 \date{Facultad de Ciencias UNAM}
 
 \begin{document}
@@ -32,7 +32,7 @@
   La comunicación en \textit{RemoteMessagePassing} es punto a punto, bidireccional y asíncrona, pues \textit{JAVA} cuenta en su
   implementación de \textit{sockets} y \textit{streams} con un \textit{buffer} de información de entrada, por lo que en realidad los emisores no se bloquean\footnote{Esto de hecho es observable en la implementación y su ejecución.} en espera de que el receptor haya recibido su mensaje.
  \item \textbf{Si N threads (T1, T2, ..., TN) envían, cada uno, un mensaje diferente a S, en el orden de su numeración (primero T1, luego T2, etc.), ¿En qué orden va a recibir S los mensajes?}\\
-   Los sockets que utilizamos son del tipo \textit{TCP}\footnote{\href{http://www.buyya.com/java/Chapter13.pdf}{Fuente: }, págs. 350-355}, esto asegura la entrega de los mensajes y el orden de llegada debe ser el mismo que el orden de envío. Deben recibirse entonces en el orden T1, T2, ..., TN.
+   Los sockets que utilizamos son del tipo \textit{TCP}\footnote{\href{http://www.buyya.com/java/Chapter13.pdf}{Fuente: }, págs. 350-355}, además de que es por ello que la comunicación es bidireccional, esto asegura la entrega de los mensajes y el orden de llegada debe ser el mismo que el orden de envío. Deben recibirse entonces en el orden T1, T2, ..., TN.
 \end{enumerate}
 
 \section{Ejecución}
@@ -55,7 +55,7 @@ Para iniciar tal cliente, es necesario llamar al programa con dos argumentos (se
 \end{verbatim}
 Cabe mencionar que nuestro cliente sólo hace una petición por ejecución mientras que el servidor se mantiene en ejecución en espera de mensajes para hacer su trabajo de ordenamiento.
 
-\subsection{RemoteMessagePassing y ExtendedRendesvous}
+\subsection{RemoteMessagePassing y ExtendedRendezvous}
 Las pruebas respectivas de ambos \textit{tests} se ejecutan\footnote{Aunque en el caso de nuestro \textit{RemoteMessagePassingTest} la comunicación se basa en que el cliente manda por tiempo indefinido mensajes, mientras que en \textit{ExtendedRendezvousTest} la comunicación es de ambas partes, tanto del cliente como del servidor.} como se especifica en la práctica.
 
 
